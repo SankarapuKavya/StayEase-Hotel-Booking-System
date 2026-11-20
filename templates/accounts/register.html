@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Account | StayEase{% endblock %}
+
+{% block content %}
+
+<div class="auth-section">
+    <div class="auth-card">
+        <span class="section-label">JOIN STAYEASE</span>
+        <h2>Create Your Account</h2>
+        <p class="text-muted">Register to discover and book hotels.</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    Please correct the errors below.
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                {{ form.username }}
+                <small class="text-muted">
+                    Required. Use letters, numbers and @/./+/-/_ characters.
+                </small>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                {{ form.password1 }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Confirm Password</label>
+                {{ form.password2 }}
+            </div>
+
+            <button type="submit" class="btn btn-primary-custom w-100">
+                Create Account
+            </button>
+        </form>
+
+        <p class="auth-bottom">
+            Already registered?
+            <a href="{% url 'accounts:login' %}">Login</a>
+        </p>
+    </div>
+</div>
+
+{% endblock %}

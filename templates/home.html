@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block title %}StayEase | Find Your Perfect Stay{% endblock %}
+
+{% block content %}
+
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="hero-label">WELCOME TO STAYEASE</span>
+
+                <h1 class="hero-title">
+                    Find your perfect stay, wherever life takes you.
+                </h1>
+
+                <p class="hero-description">
+                    Discover comfortable hotels, compare rooms and book
+                    your next getaway with ease.
+                </p>
+
+                <form method="get" action="{% url 'hotels:hotel_list' %}"
+                      class="search-box row g-2">
+
+                    <div class="col-md-5">
+                        <label class="form-label">Destination</label>
+                        <input type="text" name="city"
+                               class="form-control"
+                               placeholder="Enter city">
+                    </div>
+
+                    <div class="col-md-5">
+                        <label class="form-label">Hotel name</label>
+                        <input type="text" name="q"
+                               class="form-control"
+                               placeholder="Search hotels">
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit"
+                                class="btn btn-primary-custom w-100">
+                            Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-5 mt-4 mt-lg-0">
+                <div class="hero-image"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container section-padding">
+    <div class="section-heading">
+        <div>
+            <span class="section-label">DISCOVER</span>
+            <h2>Featured Hotels</h2>
+            <p>Explore some of the stays available on StayEase.</p>
+        </div>
+
+        <a href="{% url 'hotels:hotel_list' %}" class="text-link">
+            View all hotels →
+        </a>
+    </div>
+
+    <div class="row g-4">
+        {% for hotel in featured_hotels %}
+            <div class="col-md-6 col-lg-4">
+                <div class="hotel-card h-100">
+                    {% if hotel.image %}
+                        <img src="{{ hotel.image.url }}"
+                             class="hotel-card-image"
+                             alt="{{ hotel.name }}">
+                    {% else %}
+                        <div class="hotel-card-placeholder">
+                            <span>{{ hotel.name }}</span>
+                        </div>
+                    {% endif %}
+
+                    <div class="hotel-card-body">
+                        <span class="city-label">{{ hotel.city }}</span>
+                        <h5>{{ hotel.name }}</h5>
+                        <p>{{ hotel.address|truncatechars:85 }}</p>
+
+                        <a href="{% url 'hotels:hotel_detail' hotel.id %}"
+                           class="btn btn-outline-custom w-100">
+                            View Hotel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="empty-state">
+                    <h4>No hotels have been added yet.</h4>
+                    <p>Log in to the admin panel and add your first hotel.</p>
+                    <a href="/admin/" class="btn btn-primary-custom">
+                        Open Admin
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="why-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="section-label">WHY STAYEASE</span>
+            <h2>Travel planning made simple</h2>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">⌕</div>
+                    <h5>Easy Discovery</h5>
+                    <p>Explore hotels and find stays that suit your destination.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">◇</div>
+                    <h5>Room Choices</h5>
+                    <p>Compare room categories, capacity and nightly prices.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">✓</div>
+                    <h5>Simple Booking</h5>
+                    <p>Make reservations and keep track of your bookings.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

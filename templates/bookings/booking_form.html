@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Book a Room | StayEase{% endblock %}
+
+{% block content %}
+
+<div class="container section-padding">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+
+            <div class="booking-card">
+                <span class="section-label">RESERVE YOUR STAY</span>
+                <h2>Complete Your Booking</h2>
+
+                <div class="booking-hotel-info my-4">
+                    <h5>{{ room_type.hotel.name }}</h5>
+                    <p>{{ room_type.hotel.city }}</p>
+                    <h4 class="price-text">
+                        ₹{{ room_type.price_per_night }}
+                        <small class="text-muted">/ night</small>
+                    </h4>
+                    <p class="mb-0">{{ room_type.name }}</p>
+                    <small class="text-muted">
+                        Maximum capacity: {{ room_type.capacity }} guest(s)
+                    </small>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label">Check-in Date</label>
+                        <input type="date" name="check_in"
+                               class="form-control"
+                               min="{{ today|date:'Y-m-d' }}"
+                               required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Check-out Date</label>
+                        <input type="date" name="check_out"
+                               class="form-control"
+                               min="{{ today|date:'Y-m-d' }}"
+                               required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Number of Guests</label>
+                        <input type="number" name="guests"
+                               class="form-control"
+                               min="1" max="{{ room_type.capacity }}"
+                               value="1" required>
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary-custom w-100">
+                        Confirm Booking
+                    </button>
+
+                    <a href="{% url 'hotels:hotel_detail' room_type.hotel.id %}"
+                       class="btn btn-light w-100 mt-2">
+                        Go Back
+                    </a>
+                </form>
+
+                <p class="small text-muted mt-3 mb-0">
+                    Your booking is confirmed when the reservation is
+                    successfully created. Online payment is not enabled yet.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
