@@ -3,3 +3,4 @@ mysqlclient==2.3.0
 python-dotenv==1.2.3
 gunicorn
 whitenoise
+gunicorn
